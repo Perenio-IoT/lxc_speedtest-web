@@ -1,4 +1,4 @@
-///--Copyright (C) 2021 Perenio IoT spol. s r.o.*
+import JsonRpc from "./JsonRpc/JsonRpc.js";
 
 export default class Translator {
 
@@ -8,9 +8,13 @@ export default class Translator {
 
         this.source = await this._getTranslations();
 
-        await this.setCurrentLang();
+        this.isLogin() && (this.currentLang = await this.getHostLang());
 
         this.doTranslate();
+    }
+
+    static isLogin() {
+        return location.pathname == '/cgi-bin/luci';
     }
 
     /**
@@ -23,20 +27,17 @@ export default class Translator {
         for (let field of fields)
             if (!!this.source[this.currentLang][field.dataset.translate])
                 field.innerHTML = this.source[this.currentLang][field.dataset.translate];
-
     }
 
-    static async setCurrentLang () {
+    static async getHostLang() {
+        
+        const host_lang = await JsonRpc.requestIntoSYS('exec', `ubus call host request '{"path":"uci","cmd":"get","arg": {"config":"luci","section":"main","option":"lang"} }'`);
 
-        const translator = await fetch(`http://192.168.1.1/cgi-bin/luci/api/translator`, {
+        return host_lang.value;
+    }
 
-            method: "POST",
-
-            body: JSON.stringify({ method: 'getCurLanguage' })
-
-        }).then(d => d.json());
-
-        window.localStorage.setItem('lang', translator);
+    static set currentLang(val) {
+        window.localStorage.setItem('lang', val);
     }
 
     static get currentLang() {
