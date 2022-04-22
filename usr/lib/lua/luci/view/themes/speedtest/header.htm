@@ -6,7 +6,6 @@
     local version = ipkg and ipkg.status("lxc-speedtest-web")["lxc-speedtest-web"].Version or "h83246832462384"
 
     local host_theme = luci.util.ubus('host', 'request', {path = "uci", cmd = "get", arg = {config="luci", section="main", option = "mediaurlbase"} }).value:gsub('/luci%-static/','')
-
 %>
 
 <html> 
@@ -21,15 +20,11 @@
 
         <link rel="stylesheet" href="/luci-static/resources/styles/material.css">
 
-        <link rel="stylesheet" href="/luci-static/resources/styles/main.css?v=<%=version%>">
-
         <link rel="stylesheet" href="/luci-static/<%=host_theme%>/styles/bundle.css?v=<%=version%>"> 
 
         <link rel="stylesheet" href="/luci-static/resources/styles/root.css?v=<%=version%>">
 
-        <link rel="stylesheet" href="/luci-static/resources/styles/mobile.css?v=<%=version%>" type="text/css" />
-
-        <link rel="shortcut icon" href="/luci-static/perenio/images/favicon.ico">
+        <link rel="shortcut icon" href="/luci-static/<%=host_theme%>/images/favicon.ico">
 
         <script defer src="/luci-static/resources/js/libs/material.js"></script>
 
