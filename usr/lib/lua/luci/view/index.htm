@@ -3,9 +3,9 @@
     <style>
         #output {
             min-width: 300px;
-            height: 330px;
+            height: 430px;
             max-height: 800px;
-            background: #0e0e0e;
+            /* background: #0e0e0e; */
             color: #fff;
             white-space: pre;
             overflow: auto;
@@ -30,11 +30,15 @@
         .modal-dialog {
             height: auto !important;
         }
+
+        .mdc-button {
+            margin-bottom: 20px;
+        }
     </style>
 
     <div data-module="speedtest">
 
-        <button tabindex="1" id="start-test" class="mdc-button" data-mdc-auto-init="MDCRipple">Start Test</button>
+        <button tabindex="1" id="start-test" class="mdc-button mdc-button--unelevated" data-mdc-auto-init="MDCRipple">Start Test</button>
 
         <div id="output"></div>
 

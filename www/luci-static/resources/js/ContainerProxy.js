@@ -41,10 +41,10 @@ export default class ContainerProxy {
         document.querySelector(selector).classList.add(className);
     }
     
-    static applyHostStyles(rule = { "height": `${document.querySelector('#maincontent').offsetHeight + 150}px` }) {
-        window.parent.postMessage({"style": rule }, '*');
+    static applyHostStyles(selector = "#lxc-container", rule = { "height": `${document.querySelector('#maincontent').offsetHeight + 250}px` }) {
+        window.parent.postMessage({"style": { selector, rule} }, '*');
     }
-
+    
     static callHostPreloader(state) {
         window.parent.postMessage({"loader": state}, '*');
     }
